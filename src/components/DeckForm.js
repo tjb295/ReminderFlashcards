@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Header, Card, Input, CardSection, Button } from './common';
+import {Header, Card, NewCardButton, Input, CardSection, Button } from './common';
 
 class DeckForm extends Component {
 
@@ -20,9 +20,17 @@ class DeckForm extends Component {
                         value={this.props.deckName}
                         />
                 </CardSection>
-                <CardSection>
+                <Card>
                     <Header headerText="Add Cards Below"/>
-                    {this.renderCards()}
+                    
+                    <CardSection>
+                        <NewCardButton>+</NewCardButton>
+                        {this.renderCards()}
+                    </CardSection>
+
+                </Card>
+                <CardSection>
+                    <Button>Save Deck</Button>
                 </CardSection>
             </Card>
         );
