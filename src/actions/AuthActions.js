@@ -8,6 +8,7 @@ import {
 
 } from './types';
 import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 
 export const emailChanged = (text) => {
     return {
@@ -45,6 +46,8 @@ const loginUserSuccess = (dispatch, user) => {
         type: LOGIN_SUCCESS,
         payload: user
     });
+
+    Actions.topMenu();
 }
 
 const loginUserFail = (dispatch, error) => {
