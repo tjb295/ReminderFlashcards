@@ -1,7 +1,6 @@
 //this file will create all the different routes to use
 import React from 'react';
 import {Scene, Router, Actions } from 'react-native-router-flux';
-import { View } from 'react-native';
 import LoginScreen from './components/LoginScreen';
 
 const RouterComponent = () => {
@@ -12,7 +11,7 @@ const RouterComponent = () => {
             >
             <Scene key="root" hideNavBar>
                 <Scene key="auth">
-                    <Scene key="login" component={View} 
+                    <Scene key="login" component={LoginScreen} 
                     title="Login or Create an Account" 
                     sceneStyle={{paddingTop: 64}} 
                     initial />
