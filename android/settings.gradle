@@ -1,0 +1,3 @@
+rootProject.name = 'ReminderFlashcards'
+
+include ':app'
