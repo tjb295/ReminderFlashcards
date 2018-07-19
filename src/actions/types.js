@@ -5,3 +5,9 @@ export const LOGIN_SUCCESS = 'login_success';
 export const LOGIN_FAIL = 'login_fail';
 export const LOGIN_USER = 'login_user';
 export const EMPLOYEE_FETCH_SUCCESS = 'employee_fetch_success';
+
+
+//flash card creation actions
+export const DECK_CREATE = 'deck_create';
+export const CARD_CREATE = 'create_card';
+

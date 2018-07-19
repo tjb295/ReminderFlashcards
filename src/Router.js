@@ -3,6 +3,7 @@ import React from 'react';
 import {Scene, Router, Actions } from 'react-native-router-flux';
 import LoginScreen from './components/LoginScreen';
 import TopMenu from './components/TopMenu';
+import DeckForm from './components/DeckForm';
 
 const RouterComponent = () => {
     return(
@@ -19,7 +20,12 @@ const RouterComponent = () => {
                     initial />
                 </Scene>
                 <Scene key="mainApp">
-                    <Scene key="topMenu" component={TopMenu} title="Main Menu" />
+                    <Scene key="topMenu" 
+                           rightTitle="Create Deck"
+                           onRight = {() => {Actions.deckCreate()}}
+                           component={TopMenu} 
+                           title="Main Menu" />
+                    <Scene key="deckCreate" component={DeckForm} title="Create a new Deck" />
                 </Scene>
 
             </Scene>
