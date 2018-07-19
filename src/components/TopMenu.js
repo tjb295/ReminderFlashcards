@@ -11,7 +11,10 @@ class TopMenu extends Component {
                     <Button>View Decks</Button>
                 </CardSection>
                 <CardSection>
-                    <Button>Create New Deck</Button>
+                    <Button>Do a Random Challenge!</Button>
+                </CardSection>
+                <CardSection>
+                    <Button>Manage Challenge Alarms </Button>
                 </CardSection>
             </Card>
         );
