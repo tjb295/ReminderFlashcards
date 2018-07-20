@@ -3,7 +3,8 @@ import {
     CARD_CREATE,
     DECK_SAVE,
     DECK_NAME_CHANGE,
-    DECK_CREATE_SUCCESS
+    DECK_CREATE_SUCCESS,
+    CARD_UPDATE
 } from './types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -21,7 +22,7 @@ export const saveCurrentDeck = ({ deckName, deckId }) => {
 
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
-        .set({ deckName })
+        .update({ DeckName: deckName })
         .then(() => {
             dispatch({ type: DECK_CREATE_SUCCESS});
             Actions.pop();
@@ -37,16 +38,16 @@ export const newDeckCreated = ( DeckName ) => {
     return (dispatch) => {
         const refId = firebase.database().ref(`/users/${currentUser.uid}/decks`)
         .push({ DeckName })
-        .then(refId => {
+        .then((refId) => {
             dispatch({ type: DECK_CREATE,
-                       payload: refId
+                       payload: refId.key
                     });
         });
     };
 }
 
 //action to create new deck of cards
-export const addCardtoDeck = ({ front, back, uid }) => {
+export const addCardtoDeck = ({ front, back, deckId }) => {
     //firebase call to save the data we are given
     //this says get access to our firebase db,
     //make reference to our users userid's emplyees
@@ -60,12 +61,19 @@ export const addCardtoDeck = ({ front, back, uid }) => {
     const { currentUser } = firebase.auth();
 
     return (dispatch) => {
-        firebase.database().ref(`/users/${currentUser.uid}/decks/${uid}`)
+        firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}/cards`)
         .push({front, back})
         .then(() => {
             dispatch({
-                type: CARD_CREATE,
+                type: CARD_CREATE
             });
         });
     };
+}
+
+export const cardDetailUpdate = ({ prop, value }) => {
+    return{
+        type: CARD_UPDATE,
+        payload: {prop, value}
+    }
 }

@@ -13,3 +13,4 @@ export const CARD_CREATE = 'create_card';
 export const DECK_SAVE = 'deck_save';
 export const DECK_NAME_CHANGE = 'deck_name_change';
 export const DECK_CREATE_SUCCESS = 'deck_create_success';
+export const CARD_UPDATE = 'card_update';

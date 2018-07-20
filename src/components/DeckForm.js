@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import {Header, Card, NewCardButton, Input, CardSection, Button } from './common';
 import { connect } from 'react-redux';
-import { cardsFetch, onDeckNameChange, newDeckCreated, saveCurrentDeck } from '../actions/FlashCardActions';
+import CardInputModal from './CardInputModal';
+import { cardsFetch, 
+        onDeckNameChange, 
+        newDeckCreated, 
+        saveCurrentDeck, 
+        addCardtoDeck 
+} from '../actions/FlashCardActions';
 import _ from 'lodash';
 
 class DeckForm extends Component {
+    
+    state = { showModal: false};
 
     componentWillMount(){
         this.props.newDeckCreated(this.props.deckName);
@@ -18,6 +26,17 @@ class DeckForm extends Component {
     toSaveDeck(){
         const { deckName, deckId } = this.props;
         this.props.saveCurrentDeck({deckName, deckId});
+    }
+
+    addNewCard() {
+        const { front, back, deckId} = this.props;
+        
+        this.props.addCardtoDeck({front, back, deckId});
+        this.setState({ showModal: false});
+    }
+
+    cancelAddCard() {
+        this.setState({ showModal: false});
     }
 
     //have the different cards added rendered undernearth
@@ -64,7 +83,7 @@ class DeckForm extends Component {
                     <Header headerText="Add Cards Below"/>
                     
                     <CardSection>
-                        <NewCardButton toPress={() => {}}>+</NewCardButton>
+                        <NewCardButton toPress={() => this.setState({ showModal: !this.state.showModal})}>+</NewCardButton>
                        
                     </CardSection>
 
@@ -72,7 +91,15 @@ class DeckForm extends Component {
                 <CardSection>
                     <Button toPress={this.toSaveDeck.bind(this)}>Save Deck</Button>
                 </CardSection>
+                <CardInputModal 
+                    visible={this.state.showModal}
+                    front={this.props.front}
+                    back={this.props.back}
+                    save={this.addNewCard.bind(this)}
+                    cancel={this.cancelAddCard.bind(this)}
+                />
             </Card>
+            
         );
     }
 }
@@ -87,9 +114,11 @@ const mapStateToProps = state => {
     return { 
         deckId: state.flashCard.deckId,
         deckName: state.flashCard.deckName,
-        cards: cards
+        cards: cards,
+        front: state.flashCard.front,
+        back: state.flashCard.back
     }
 }
     
 
-export default connect(mapStateToProps, {cardsFetch, onDeckNameChange, newDeckCreated, saveCurrentDeck })(DeckForm);
+export default connect(mapStateToProps, {cardsFetch, onDeckNameChange, newDeckCreated, saveCurrentDeck, addCardtoDeck })(DeckForm);

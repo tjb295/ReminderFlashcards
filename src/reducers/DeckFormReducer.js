@@ -3,7 +3,8 @@ import {
     CARD_CREATE,
     DECK_SAVE,
     DECK_NAME_CHANGE,
-    DECK_CREATE_SUCCESS
+    DECK_CREATE_SUCCESS,
+    CARD_UPDATE,
 } from '../actions/types';
 
 
@@ -11,6 +12,8 @@ const INITIAL_STATE = {
     deckName: '',
     deckId: '',
     cards: [],
+    front :'',
+    back: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -20,10 +23,18 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, deckName: action.payload};
 
         case DECK_CREATE:
+            console.log(action.payload);
             return {...state, deckId: action.payload};
 
         case DECK_CREATE_SUCCESS:
-            return state;
+            return INITIAL_STATE;
+        
+        case CARD_CREATE:
+            return {...state, front: '', back: ''};
+
+        case CARD_UPDATE:
+            //update the front and back value with whats typed
+            return { ...state, [action.payload.prop]: action.payload.value };
 
         default:
             return state;
