@@ -19,7 +19,8 @@ const RouterComponent = () => {
                     <Scene key="login" component={LoginScreen} 
                     title="Login or Create an Account" 
                     sceneStyle={{paddingTop: 64}} 
-                    initial />
+                    initial 
+                    hideNavBar/>
                 </Scene>
 
                 <Scene key="menus">

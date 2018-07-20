@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { CardSection, Card, Input, Button, Spinner } from './common';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../actions/AuthActions';
@@ -47,9 +47,17 @@ class LoginScreen extends Component {
         return(
             <Card>
                 <CardSection>
+                    <View style={styles.logoContainerStyle}>
+                        <Image 
+                            style={styles.logoStyle}
+                            source={ require('../../resources/FlashReminderLogo.png')}
+                            />
+                    </View>
+                </CardSection>
+                <CardSection>
                     <Input 
                         label="Email"
-                        placeholder="your email"
+                        placeholder="New or Existing account"
                         onChangeText={this.onEmailChange.bind(this)}
                         value={this.props.email}
                         />
@@ -89,7 +97,17 @@ const styles = {
         fontSize: 20,
         alignSelf: 'center',
         color: 'red'
-    }
+    },
+    logoStyle: {
+		height: 300,
+		width: 375
+    },
+    logoContainerStyle: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginLeft: 10,
+		marginRight: 10
+	},
 };
 
 //connect to map props accordingly, and to pass in actions

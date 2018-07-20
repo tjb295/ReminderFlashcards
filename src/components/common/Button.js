@@ -15,8 +15,8 @@ const styles = {
 
 	textStyle: {
 		alignSelf: 'center',
-		color: '#007aff',
-		fontSize: 16,
+		color: '#212121',
+		fontSize: 20,
 		fontWeight: '200',
 		paddingTop: 10,
 		paddingBottom: 10
@@ -25,10 +25,11 @@ const styles = {
 	buttonStyle: {
 		flex: 1,
 		alignSelf: 'stretch',
-		backgroundColor: '#fff',
+		backgroundColor: '#fff8e1',
 		borderRadius: 5,
-		borderWidth: 1,
-		borderColor: '#007aff',
+		borderTopWidth: 5,
+		borderBottomWidth: 5,
+		borderColor: '#212121',
 		marginLeft: 5,
 		marginRight: 5,
 	}
