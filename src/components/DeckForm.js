@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import {Header, Card, NewCardButton, Input, CardSection, Button } from './common';
 import { connect } from 'react-redux';
-import { cardsFetch, onDeckNameChange, newDeckCreated } from '../actions/FlashCardActions';
+import { cardsFetch, onDeckNameChange, newDeckCreated, saveCurrentDeck } from '../actions/FlashCardActions';
 import _ from 'lodash';
 
 class DeckForm extends Component {
@@ -13,6 +13,11 @@ class DeckForm extends Component {
 
     deckNameChange(text) {
         this.props.onDeckNameChange(text);
+    }
+
+    toSaveDeck(){
+        const { deckName, deckId } = this.props;
+        this.props.saveCurrentDeck({deckName, deckId});
     }
 
     //have the different cards added rendered undernearth
@@ -65,7 +70,7 @@ class DeckForm extends Component {
 
                 </Card>
                 <CardSection>
-                    <Button>Save Deck</Button>
+                    <Button toPress={this.toSaveDeck.bind(this)}>Save Deck</Button>
                 </CardSection>
             </Card>
         );
@@ -87,4 +92,4 @@ const mapStateToProps = state => {
 }
     
 
-export default connect(mapStateToProps, {cardsFetch, onDeckNameChange, newDeckCreated })(DeckForm);
+export default connect(mapStateToProps, {cardsFetch, onDeckNameChange, newDeckCreated, saveCurrentDeck })(DeckForm);

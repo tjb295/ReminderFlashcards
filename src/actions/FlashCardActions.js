@@ -2,14 +2,30 @@ import {
     DECK_CREATE,
     CARD_CREATE,
     DECK_SAVE,
-    DECK_NAME_CHANGE
+    DECK_NAME_CHANGE,
+    DECK_CREATE_SUCCESS
 } from './types';
 import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 
 export const onDeckNameChange = (text) => {
     return {
         type: DECK_NAME_CHANGE,
         payload: text
+    }
+}
+
+export const saveCurrentDeck = ({ deckName, deckId }) => {
+
+    const { currentUser } = firebase.auth();
+
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
+        .set({ deckName })
+        .then(() => {
+            dispatch({ type: DECK_CREATE_SUCCESS});
+            Actions.pop();
+        })
     }
 }
 
@@ -21,7 +37,7 @@ export const newDeckCreated = ( DeckName ) => {
     return (dispatch) => {
         const refId = firebase.database().ref(`/users/${currentUser.uid}/decks`)
         .push({ DeckName })
-        .then((refId) => {
+        .then(refId => {
             dispatch({ type: DECK_CREATE,
                        payload: refId
                     });
