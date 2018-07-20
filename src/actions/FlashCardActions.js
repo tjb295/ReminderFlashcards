@@ -4,11 +4,13 @@ import {
     DECK_SAVE,
     DECK_NAME_CHANGE,
     DECK_CREATE_SUCCESS,
-    CARD_UPDATE
+    CARD_UPDATE,
+    CARDS_FETCH_SUCCESS
 } from './types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 
+//keeps track of form for deckname
 export const onDeckNameChange = (text) => {
     return {
         type: DECK_NAME_CHANGE,
@@ -16,6 +18,7 @@ export const onDeckNameChange = (text) => {
     }
 }
 
+//save the current deck with a nam
 export const saveCurrentDeck = ({ deckName, deckId }) => {
 
     const { currentUser } = firebase.auth();
@@ -71,9 +74,20 @@ export const addCardtoDeck = ({ front, back, deckId }) => {
     };
 }
 
+//keeps track of card form updates
 export const cardDetailUpdate = ({ prop, value }) => {
     return{
         type: CARD_UPDATE,
         payload: {prop, value}
     }
+}
+
+export const cardsFetch = (deckId) => {
+    const { currentUser } = firebase.auth();
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}/cards`)
+        .on('value', snapshot => {
+            dispatch({ type: CARDS_FETCH_SUCCESS, payload: snapshot.val()});
+        });
+    };
 }

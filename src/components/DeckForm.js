@@ -17,6 +17,8 @@ class DeckForm extends Component {
 
     componentWillMount(){
         this.props.newDeckCreated(this.props.deckName);
+       
+        console.log(this.props.cards); 
     }
 
     deckNameChange(text) {
@@ -33,6 +35,7 @@ class DeckForm extends Component {
         
         this.props.addCardtoDeck({front, back, deckId});
         this.setState({ showModal: false});
+        this.props.cardsFetch(this.props.deckId);
     }
 
     cancelAddCard() {
@@ -41,15 +44,12 @@ class DeckForm extends Component {
 
     //have the different cards added rendered undernearth
 
-    // componentWillMount() {
-    //     this.props.cardsFetch();
 
-    //     this.createDataSource(this.props);
-    // }
 
-    // componentWillReceiveProps(nextProps) {
-    //     this.createDataSource(nextProps);
-    // }
+    componentWillReceiveProps(nextProps) {
+       
+        console.log(nextProps.cards);
+    }
 
     // createDataSource({ cards }){
     //     const ds = new ListView.DataSource({
@@ -107,9 +107,11 @@ class DeckForm extends Component {
 const mapStateToProps = state => {
     //map the cards
 
-    const cards = _.map(state.cards, (val, uid) => {
+    const cards = _.map(state.flashCard.cards, (val, uid) => {
         return {...val, uid};
-    })
+    });
+
+    console.log(cards);
 
     return { 
         deckId: state.flashCard.deckId,
@@ -121,4 +123,6 @@ const mapStateToProps = state => {
 }
     
 
-export default connect(mapStateToProps, {cardsFetch, onDeckNameChange, newDeckCreated, saveCurrentDeck, addCardtoDeck })(DeckForm);
+export default connect(mapStateToProps, {cardsFetch, 
+    onDeckNameChange, newDeckCreated, saveCurrentDeck,
+     addCardtoDeck, cardsFetch })(DeckForm);
