@@ -3,9 +3,11 @@ import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import {Card, CardSection, Header, Button } from './common';
 import { deckFetch } from '../actions/FlashCardActions';
+import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
 
 class DeckDisplay extends Component {
+
 
     componentWillMount() {
         this.props.deckFetch();
@@ -25,10 +27,15 @@ class DeckDisplay extends Component {
         this.dataSource = ds.cloneWithRows(decks);
     }
 
-    renderRow(deck) {
-        return <Button style={{borderColor: '#004d40' }}>{deck.DeckName}</Button>;
+    onDeckPress(deck) {
+        Actions.gameScreen({ deck: deck });
     }
 
+    renderRow(deck) {
+        return <Button toPress={Actions.gameScreen.bind(this, {deck: deck})}>{deck.DeckName}</Button>;
+    }
+
+  
 
     render(){
         return(

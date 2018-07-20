@@ -5,6 +5,7 @@ import LoginScreen from './components/LoginScreen';
 import TopMenu from './components/TopMenu';
 import DeckForm from './components/DeckForm';
 import DeckDisplay from './components/DeckDisplay';
+import GameScreen from './components/GameScreen';
 
 const RouterComponent = () => {
     return(
@@ -27,9 +28,15 @@ const RouterComponent = () => {
                            onRight = {() => {Actions.deckCreate()}}
                            component={TopMenu} 
                            title="Main Menu" />
+
                     <Scene key="deckCreate" component={DeckForm} title="Create a new Deck" />
 
                     <Scene key="showDecks" component={DeckDisplay} title="Your Flash Cards" />
+
+                </Scene>
+                <Scene key="game">
+
+                    <Scene key="gameScreen" component={GameScreen} title="Challenge!" rightTitle="Exit" onRight={() => {Actions.pop()}}/>
 
                 </Scene>
 
