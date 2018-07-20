@@ -28,6 +28,7 @@ const styles = {
         borderColor: '#81c784'
 
     }
+    
 }
 
 export { NewCardButton };

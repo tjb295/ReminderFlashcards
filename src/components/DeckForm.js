@@ -18,7 +18,7 @@ class DeckForm extends Component {
     componentWillMount(){
         this.props.newDeckCreated(this.props.deckName);
        
-        console.log(this.props.cards); 
+        this.createDataSource(this.props.cards); 
     }
 
     deckNameChange(text) {
@@ -42,31 +42,22 @@ class DeckForm extends Component {
         this.setState({ showModal: false});
     }
 
-    //have the different cards added rendered undernearth
-
-
-
     componentWillReceiveProps(nextProps) {
        
-        console.log(nextProps.cards);
+        this.createDataSource(nextProps.cards)
     }
 
-    // createDataSource({ cards }){
-    //     const ds = new ListView.DataSource({
-    //         rowHasChanged: (r1,r2) => r1 !== r2
-    //     });
+    createDataSource(cards){
+        const ds = new ListView.DataSource({
+            rowHasChanged: ( r1, r2) => r1 !== r2
+        });
 
-    //     this.dataSource = ds.cloneWithRows(cards);
-    // }
+        this.dataSource = ds.cloneWithRows(cards);
+    }
 
-    // renderRow(card) {
-    //     return <Header headerText={card} />
-    // }
-    // <ListView
-    // enableEmptySections
-    // dataSource={this.dataSource}
-    // renderRow={this.renderRow}
-    // />
+    renderRow(card){
+        return <Header headerText={card.front} />;
+    }
 
     render(){
         return(
@@ -82,9 +73,13 @@ class DeckForm extends Component {
                 <Card>
                     <Header headerText="Add Cards Below"/>
                     
-                    <CardSection>
+                    <CardSection style={{ alignItems: 'center'}}>
                         <NewCardButton toPress={() => this.setState({ showModal: !this.state.showModal})}>+</NewCardButton>
-                       
+                        <ListView 
+                            enableEmptySections
+                            dataSource={this.dataSource}
+                            renderRow={this.renderRow}
+                            />
                     </CardSection>
 
                 </Card>

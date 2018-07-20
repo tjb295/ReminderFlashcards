@@ -15,8 +15,11 @@ class CardInputModal extends Component {
                     animationType="slide"
                     onRequestClose={this.props.cancel}
                     >
-                    <View>
-                        <CardSection>
+                    <View
+                        style={styles.containerStyle}
+                        >
+                        <CardSection
+                            style={styles.CardSectionStyle}>
                             <Input 
                                 label="front"
                                 placeholder="front"
@@ -43,6 +46,26 @@ class CardInputModal extends Component {
             );
         }
         
+}
+
+const styles = {
+    CardSectionStyle: {
+        justifyContent: 'center'
+    },
+    textStyle: {
+        flex: 1,
+        fontSize: 18,
+        textAlign: 'center',
+        lineHeight: 40
+
+    },
+    containerStyle: {
+        backgroundColor: 'rgba(0,0,0,0.75)',
+        position: 'relative',
+        flex: 1,
+        justifyContent: 'center',
+        borderRadius: 5
+    }
 }
 
 const mapStateToProps = state => {
