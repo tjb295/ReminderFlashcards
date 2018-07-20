@@ -10,4 +10,5 @@ export const EMPLOYEE_FETCH_SUCCESS = 'employee_fetch_success';
 //flash card creation actions
 export const DECK_CREATE = 'deck_create';
 export const CARD_CREATE = 'create_card';
-
+export const DECK_SAVE = 'deck_save';
+export const DECK_NAME_CHANGE = 'deck_name_change';
