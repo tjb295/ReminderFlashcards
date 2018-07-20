@@ -14,10 +14,10 @@ export const onDeckNameChange = (text) => {
 }
 
 //once a user chooses add for now we will automaticaly make a new deck
-export const newDeckCreated = ({ DeckName }) => {
+export const newDeckCreated = ( DeckName ) => {
 
     const { currentUser } = firebase.auth();
-
+    console.log("hello");
     return (dispatch) => {
         const refId = firebase.database().ref(`/users/${currentUser.uid}/decks`)
         .push({ DeckName })

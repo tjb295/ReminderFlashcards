@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import {Header, Card, NewCardButton, Input, CardSection, Button } from './common';
 import { connect } from 'react-redux';
-import { cardsFetch, onDeckNameChange } from '../actions/FlashCardActions';
+import { cardsFetch, onDeckNameChange, newDeckCreated } from '../actions/FlashCardActions';
 import _ from 'lodash';
 
 class DeckForm extends Component {
+
+    componentWillMount(){
+        this.props.newDeckCreated(this.props.deckName);
+    }
 
     deckNameChange(text) {
         this.props.onDeckNameChange(text);
@@ -83,4 +87,4 @@ const mapStateToProps = state => {
 }
     
 
-export default connect(mapStateToProps, {cardsFetch, onDeckNameChange })(DeckForm);
+export default connect(mapStateToProps, {cardsFetch, onDeckNameChange, newDeckCreated })(DeckForm);
