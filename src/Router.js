@@ -4,6 +4,7 @@ import {Scene, Router, Actions } from 'react-native-router-flux';
 import LoginScreen from './components/LoginScreen';
 import TopMenu from './components/TopMenu';
 import DeckForm from './components/DeckForm';
+import DeckDisplay from './components/DeckDisplay';
 
 const RouterComponent = () => {
     return(
@@ -19,13 +20,17 @@ const RouterComponent = () => {
                     sceneStyle={{paddingTop: 64}} 
                     initial />
                 </Scene>
-                <Scene key="mainApp">
+
+                <Scene key="menus">
                     <Scene key="topMenu" 
                            rightTitle="Create Deck"
                            onRight = {() => {Actions.deckCreate()}}
                            component={TopMenu} 
                            title="Main Menu" />
                     <Scene key="deckCreate" component={DeckForm} title="Create a new Deck" />
+
+                    <Scene key="showDecks" component={DeckDisplay} title="Your Flash Cards" />
+
                 </Scene>
 
             </Scene>

@@ -5,7 +5,8 @@ import {
     DECK_NAME_CHANGE,
     DECK_CREATE_SUCCESS,
     CARD_UPDATE,
-    CARDS_FETCH_SUCCESS
+    CARDS_FETCH_SUCCESS,
+    DECKS_FETCH_SUCCESS
 } from './types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -80,6 +81,17 @@ export const cardDetailUpdate = ({ prop, value }) => {
         type: CARD_UPDATE,
         payload: {prop, value}
     }
+}
+
+export const deckFetch = () => {
+    const { currentUser } = firebase.auth();
+
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/decks`)
+        .on('value', snapshot => {
+            dispatch({ type: DECKS_FETCH_SUCCESS, payload: snapshot.val()});
+        });
+    };
 }
 
 export const cardsFetch = (deckId) => {

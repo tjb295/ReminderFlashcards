@@ -8,7 +8,7 @@ class TopMenu extends Component {
         return(
             <Card>
                 <CardSection>
-                    <Button>View Decks</Button>
+                    <Button toPress={() => {Actions.showDecks()}}>View Decks</Button>
                 </CardSection>
                 <CardSection>
                     <Button>Do a Random Challenge!</Button>

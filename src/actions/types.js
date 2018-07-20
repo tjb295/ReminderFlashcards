@@ -15,3 +15,4 @@ export const DECK_NAME_CHANGE = 'deck_name_change';
 export const DECK_CREATE_SUCCESS = 'deck_create_success';
 export const CARD_UPDATE = 'card_update';
 export const CARDS_FETCH_SUCCESS = 'cards_fetch_success';
+export const DECKS_FETCH_SUCCESS = 'decks_fetch_success';
