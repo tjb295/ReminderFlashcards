@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import {Card, CardSection, Header } from './common';
 import { connect } from 'react-redux';
 import { cardsFetch, clearForm } from '../actions/FlashCardActions';
@@ -35,18 +36,14 @@ class GameScreen extends Component {
     render(){
         return(
             <Card>
-                    <Swiper 
-                    onIndexChanged={(index) => {this.setState({showBack:false})}}
-                    style={{flex:1}}>
-                        
-                        {this.props.cards.map((card, key) => {
-                            return( <Card><CardSection><FlashCard toggle={this.onCardToggle.bind(this)}
-                                                contents={card}
-                                                showBack={this.state.showBack}/></CardSection></Card>)
-                        })}
-                        
-                    </Swiper>
-                    
+                <Swiper 
+                style={{flex:1}}>
+                    {this.props.cards.map((card, key) => {
+                        return( <Card><CardSection><FlashCard toggle={this.onCardToggle.bind(this)}
+                                            contents={card}
+                                            showBack={this.state.showBack}/></CardSection></Card>)
+                    })}
+                </Swiper>
             </Card>
         );
     }

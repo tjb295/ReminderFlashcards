@@ -61,7 +61,7 @@ class DeckForm extends Component {
     }
 
     renderRow(card){
-        return <Header headerText={card.front} />;
+        return <Button style={{borderRadius: 1}}> {card.front} </Button>;
     }
 
     render(){
@@ -78,14 +78,19 @@ class DeckForm extends Component {
                 <Card>
                     <Header headerText="Add Cards Below"/>
                     
-                    <CardSection style={{ alignItems: 'center'}}>
-                        <NewCardButton toPress={() => this.setState({ showModal: !this.state.showModal})}>+</NewCardButton>
-                        <ListView 
-                            enableEmptySections
-                            dataSource={this.dataSource}
-                            renderRow={this.renderRow}
-                            />
-                    </CardSection>
+                    <Card style={{ alignItems: 'center'}}>
+                        <CardSection>
+                            <NewCardButton toPress={() => this.setState({ showModal: !this.state.showModal})}>+</NewCardButton>
+                        </CardSection>
+                        <CardSection>
+                            <ListView 
+                                style={{height: 200}}
+                                enableEmptySections
+                                dataSource={this.dataSource}
+                                renderRow={this.renderRow}
+                                />
+                        </CardSection>
+                    </Card>
 
                 </Card>
                 <CardSection>

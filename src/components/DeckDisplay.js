@@ -43,7 +43,6 @@ class DeckDisplay extends Component {
         return(
             <Card>
                 <CardSection>
-                    {this.showLoading}
                     <ListView 
                             enableEmptySections
                             dataSource={this.dataSource}
