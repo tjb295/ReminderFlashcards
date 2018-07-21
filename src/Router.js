@@ -37,7 +37,7 @@ const RouterComponent = () => {
                 </Scene>
                 <Scene key="game">
 
-                    <Scene key="gameScreen" component={GameScreen} title="Challenge!" rightTitle="Exit" onRight={() => {Actions.pop()}}/>
+                    <Scene key="gameScreen" component={GameScreen} title="Challenge!" rightTitle="Exit" onRight={() => {Actions.popTo('showDecks')}}/>
 
                 </Scene>
 

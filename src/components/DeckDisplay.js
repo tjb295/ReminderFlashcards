@@ -34,7 +34,8 @@ class DeckDisplay extends Component {
     }
 
     renderRow(deck) {
-    return (<Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName}</Button>);
+    return (<Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName} 
+                 </Button>);
     }
 
     openAlarmChooseModal(deckId){
@@ -70,6 +71,7 @@ class DeckDisplay extends Component {
                     visible={this.state.showModal}
                     onDateChange={this.dateChangeHandle.bind(this)}
                     saveDate={this.toSaveDate.bind(this)}
+                    delete={() => {}}
                 />
             </Card>
 

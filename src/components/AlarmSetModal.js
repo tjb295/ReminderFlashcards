@@ -1,7 +1,8 @@
 import React,  { Component } from 'react';
-import {CardSection, Button} from './common';
+import {CardSection, Button, Confirm} from './common';
 import { Modal, View, Text, Picker } from 'react-native';
 import DatePicker from 'react-native-datepicker';
+
 
 class AlarmSetModal extends Component {
 
@@ -18,12 +19,12 @@ class AlarmSetModal extends Component {
                     <DatePicker
                         style={{width: 200}}
                         date={this.props.date}
-                        mode="date"
-                        placeholder="select date"
-                        format="YYYY-MM-DD"
+                        mode="datetime"
+                        placeholder="Select a Date and Time"
                         minDate="2016-05-01"
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
+                        iconSource={require('../../resources/FlashReminderLogo.png')}
                         customStyles={{
                         dateIcon: {
                             position: 'absolute',
@@ -41,6 +42,8 @@ class AlarmSetModal extends Component {
                 </CardSection>
                 <CardSection>
                     <Button toPress={this.props.saveDate}> Save Alarm </Button>
+                    <Button toPress={this.props.delete}> Delete Deck </Button>
+                    <Button toPress={() => {}}> Edit Deck </Button>
                 </CardSection>
                 </View>
             </Modal>

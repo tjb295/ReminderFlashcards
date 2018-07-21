@@ -5,6 +5,10 @@ import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser } from '../actions/AuthActions';
 
 class LoginScreen extends Component {
+
+    //logic for switching to password on email submit
+    state = { focusPasswordInput: false };
+
     //add event handlers for text entry change
     onEmailChange(text){
         this.props.emailChanged(text);
@@ -40,6 +44,10 @@ class LoginScreen extends Component {
         return <Button toPress={this.attemptLogin.bind(this)}>Login</Button>
     }
 
+    handleEmailInputSubmit() {
+        this.setState({focusPasswordInput: true});
+    }
+
 
 
 
@@ -60,6 +68,7 @@ class LoginScreen extends Component {
                         placeholder="New or Existing account"
                         onChangeText={this.onEmailChange.bind(this)}
                         value={this.props.email}
+                        onSubmitEditing={this.handleEmailInputSubmit.bind(this)}
                         />
                 </CardSection>
                 <CardSection>
@@ -69,6 +78,7 @@ class LoginScreen extends Component {
                         placeholder="Password"
                         onChangeText={this.onPasswordChange.bind(this)}
                         value={this.props.password}
+                        focus={this.state.focusPasswordInput}
                         />
                 </CardSection>
                 <CardSection>
