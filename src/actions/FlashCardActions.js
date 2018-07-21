@@ -6,7 +6,8 @@ import {
     DECK_CREATE_SUCCESS,
     CARD_UPDATE,
     CARDS_FETCH_SUCCESS,
-    DECKS_FETCH_SUCCESS
+    DECKS_FETCH_SUCCESS,
+    CLEAR_FORM
 } from './types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -16,6 +17,12 @@ export const onDeckNameChange = (text) => {
     return {
         type: DECK_NAME_CHANGE,
         payload: text
+    }
+}
+
+export const clearForm = () => {
+    return {
+        type: CLEAR_FORM
     }
 }
 

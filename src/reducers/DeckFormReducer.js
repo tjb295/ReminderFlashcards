@@ -6,6 +6,7 @@ import {
     DECK_CREATE_SUCCESS,
     CARD_UPDATE,
     CARDS_FETCH_SUCCESS,
+    CLEAR_FORM
 } from '../actions/types';
 
 
@@ -40,6 +41,8 @@ export default (state = INITIAL_STATE, action) => {
         case CARDS_FETCH_SUCCESS:
             return {...state, cards: action.payload};
 
+        case CLEAR_FORM:
+            return INITIAL_STATE;
         default:
             return state;
     }

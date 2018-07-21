@@ -7,7 +7,8 @@ import { cardsFetch,
         onDeckNameChange, 
         newDeckCreated, 
         saveCurrentDeck, 
-        addCardtoDeck 
+        addCardtoDeck,
+        clearForm 
 } from '../actions/FlashCardActions';
 import _ from 'lodash';
 
@@ -19,6 +20,10 @@ class DeckForm extends Component {
         this.props.newDeckCreated(this.props.deckName);
        
         this.createDataSource(this.props.cards); 
+    }
+
+    componentWillUnmount(){
+        this.props.clearForm();
     }
 
     deckNameChange(text) {
@@ -120,4 +125,4 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {cardsFetch, 
     onDeckNameChange, newDeckCreated, saveCurrentDeck,
-     addCardtoDeck, cardsFetch })(DeckForm);
+     addCardtoDeck, cardsFetch, clearForm })(DeckForm);

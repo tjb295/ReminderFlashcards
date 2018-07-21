@@ -35,12 +35,15 @@ class DeckDisplay extends Component {
         return <Button toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName}</Button>;
     }
 
+
+
   
 
     render(){
         return(
             <Card>
                 <CardSection>
+                    {this.showLoading}
                     <ListView 
                             enableEmptySections
                             dataSource={this.dataSource}

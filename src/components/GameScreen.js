@@ -1,46 +1,52 @@
 import React, { Component } from 'react';
 import {Card, CardSection, Header } from './common';
 import { connect } from 'react-redux';
-import { cardsFetch } from '../actions/FlashCardActions';
+import { cardsFetch, clearForm } from '../actions/FlashCardActions';
 import FlashCard from './FlashCard';
 import _ from 'lodash';
+import Swiper from 'react-native-swiper';
 
 class GameScreen extends Component {
 
     state = {
         showBack: false,
-        recievedCardProps: false
     };
 
     componentWillMount(){
         this.props.cardsFetch(this.props.deckId);
     }
 
-    componentWillReceiveProps(){
-        this.setState({recievedCardProps: true});
+    componentWillUnmount(){
+        this.props.clearForm();
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.onCardToggle();
+        this.props.cards = nextProps.cards;
     }
 
     onCardToggle(){
         this.setState({showBack: !this.state.showBack});
     }
 
-    renderFlashCard(){
-        if(this.state.recievedCardProps){
-            return(
-                <FlashCard toggle={this.onCardToggle.bind(this)}
-                contents={this.props.cards[0]}
-                showBack={this.state.showBack}/>
-            );
-        }
 
-    }
+    
 
     render(){
         return(
             <Card>
-                <CardSection>
-                    {this.renderFlashCard()}
-                </CardSection>
+                    <Swiper 
+                    onIndexChanged={(index) => {this.setState({showBack:false})}}
+                    style={{flex:1}}>
+                        
+                        {this.props.cards.map((card, key) => {
+                            return( <Card><CardSection><FlashCard toggle={this.onCardToggle.bind(this)}
+                                                contents={card}
+                                                showBack={this.state.showBack}/></CardSection></Card>)
+                        })}
+                        
+                    </Swiper>
+                    
             </Card>
         );
     }
@@ -57,4 +63,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { cardsFetch })(GameScreen);
+export default connect(mapStateToProps, { cardsFetch, clearForm })(GameScreen);

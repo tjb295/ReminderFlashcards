@@ -4,7 +4,7 @@ export const PASSWORD_CHANGED = 'password_changed';
 export const LOGIN_SUCCESS = 'login_success';
 export const LOGIN_FAIL = 'login_fail';
 export const LOGIN_USER = 'login_user';
-export const EMPLOYEE_FETCH_SUCCESS = 'employee_fetch_success';
+
 
 
 //flash card creation actions
@@ -16,3 +16,4 @@ export const DECK_CREATE_SUCCESS = 'deck_create_success';
 export const CARD_UPDATE = 'card_update';
 export const CARDS_FETCH_SUCCESS = 'cards_fetch_success';
 export const DECKS_FETCH_SUCCESS = 'decks_fetch_success';
+export const CLEAR_FORM = 'clear_form';
