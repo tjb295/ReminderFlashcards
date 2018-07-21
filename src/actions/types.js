@@ -17,3 +17,6 @@ export const CARD_UPDATE = 'card_update';
 export const CARDS_FETCH_SUCCESS = 'cards_fetch_success';
 export const DECKS_FETCH_SUCCESS = 'decks_fetch_success';
 export const CLEAR_FORM = 'clear_form';
+
+export const ALARM_SAVE_SUCCESS = 'alarm_save_success'
+export const DATE_CHANGE = 'date_change';

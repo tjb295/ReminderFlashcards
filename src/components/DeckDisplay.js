@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import {Card, CardSection, Header, Button } from './common';
-import { deckFetch } from '../actions/FlashCardActions';
+import { deckFetch, saveAlarm, onDateChange } from '../actions/FlashCardActions';
 import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
+import AlarmSetModal from './AlarmSetModal';
 
 class DeckDisplay extends Component {
 
+    state = { showModal : false, deckIdtoSave: '' };
 
     componentWillMount() {
         this.props.deckFetch();
@@ -32,7 +34,21 @@ class DeckDisplay extends Component {
     }
 
     renderRow(deck) {
-        return <Button toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName}</Button>;
+    return (<Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName}</Button>);
+    }
+
+    openAlarmChooseModal(deckId){
+        this.setState({ showModal: true });
+        this.setState({ deckIdtoSave: deckId});
+    }
+
+    dateChangeHandle(date) {
+        this.props.onDateChange(date);
+    }
+
+    toSaveDate(){
+        this.props.saveAlarm(this.props.date, this.state.deckIdtoSave);
+        this.setState({showModal: false});
     }
 
 
@@ -46,9 +62,15 @@ class DeckDisplay extends Component {
                     <ListView 
                             enableEmptySections
                             dataSource={this.dataSource}
-                            renderRow={this.renderRow}
+                            renderRow={this.renderRow.bind(this)}
                             />
                 </CardSection>
+                <AlarmSetModal 
+                    date={this.props.date}
+                    visible={this.state.showModal}
+                    onDateChange={this.dateChangeHandle.bind(this)}
+                    saveDate={this.toSaveDate.bind(this)}
+                />
             </Card>
 
         );
@@ -60,7 +82,8 @@ const mapStateToProps = state => {
         return {...val, uid};
     });
 
-    return { decks: decks };
+    return { decks: decks,
+             date: state.deckFetch.date };
 }
 
-export default connect(mapStateToProps, { deckFetch })(DeckDisplay);
+export default connect(mapStateToProps, { deckFetch, saveAlarm, onDateChange })(DeckDisplay);

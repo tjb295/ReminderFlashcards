@@ -27,6 +27,7 @@ const styles = {
         shadowOpacity: 0.9,
         elevation: 3,
         position: 'relative',
+        borderTopRadius: 3
     },
     textStyle: {
         fontSize: 20,

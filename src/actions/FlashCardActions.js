@@ -7,7 +7,9 @@ import {
     CARD_UPDATE,
     CARDS_FETCH_SUCCESS,
     DECKS_FETCH_SUCCESS,
-    CLEAR_FORM
+    CLEAR_FORM,
+    ALARM_SAVE_SUCCESS,
+    DATE_CHANGE
 } from './types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -108,5 +110,24 @@ export const cardsFetch = (deckId) => {
         .on('value', snapshot => {
             dispatch({ type: CARDS_FETCH_SUCCESS, payload: snapshot.val()});
         });
+    };
+}
+
+export const saveAlarm = (date, deckId) => {
+    const { currentUser } = firebase.auth();
+    console.log(date);
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
+        .update({ alarmDate: date})
+            .then(() => {
+                dispatch({ type: ALARM_SAVE_SUCCESS });
+            });
+    };
+}
+
+export const onDateChange = (date) => {
+    return {
+        type: DATE_CHANGE,
+        payload: date
     };
 }
