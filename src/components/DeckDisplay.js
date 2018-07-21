@@ -32,7 +32,7 @@ class DeckDisplay extends Component {
     }
 
     renderRow(deck) {
-        return <Button toPress={Actions.gameScreen.bind(this, {deck: deck})}>{deck.DeckName}</Button>;
+        return <Button toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName}</Button>;
     }
 
   

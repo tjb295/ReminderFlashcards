@@ -56,7 +56,7 @@ class LoginScreen extends Component {
                 </CardSection>
                 <CardSection>
                     <Input 
-                        label="Email"
+                        label="Email:"
                         placeholder="New or Existing account"
                         onChangeText={this.onEmailChange.bind(this)}
                         value={this.props.email}
@@ -65,7 +65,7 @@ class LoginScreen extends Component {
                 <CardSection>
                     <Input 
                         secureTextEntry
-                        label="password"
+                        label="Password:"
                         placeholder="Password"
                         onChangeText={this.onPasswordChange.bind(this)}
                         value={this.props.password}
