@@ -8,7 +8,8 @@ import { cardsFetch,
         newDeckCreated, 
         saveCurrentDeck, 
         addCardtoDeck,
-        clearForm 
+        clearForm,
+        cardDetailReset 
 } from '../actions/FlashCardActions';
 import _ from 'lodash';
 
@@ -32,6 +33,15 @@ class DeckForm extends Component {
 
     toSaveDeck(){
         const { deckName, deckId } = this.props;
+        if(deckName == ''){
+            alert("Please enter a name for your deck");
+            return
+        }
+        console.log(this.props.cards);
+        if(!Array.isArray(this.props.cards) || !this.props.cards.length){
+            alert("Please add cards before saving.");
+            return;
+        }
         this.props.saveCurrentDeck({deckName, deckId});
     }
 
@@ -45,6 +55,7 @@ class DeckForm extends Component {
 
     cancelAddCard() {
         this.setState({ showModal: false});
+        this.props.cardDetailReset();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -116,8 +127,6 @@ const mapStateToProps = state => {
         return {...val, uid};
     });
 
-    console.log(cards);
-
     return { 
         deckId: state.flashCard.deckId,
         deckName: state.flashCard.deckName,
@@ -130,4 +139,4 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {cardsFetch, 
     onDeckNameChange, newDeckCreated, saveCurrentDeck,
-     addCardtoDeck, cardsFetch, clearForm })(DeckForm);
+     addCardtoDeck, cardsFetch, clearForm, cardDetailReset })(DeckForm);

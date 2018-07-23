@@ -6,7 +6,8 @@ import {
     DECK_CREATE_SUCCESS,
     CARD_UPDATE,
     CARDS_FETCH_SUCCESS,
-    CLEAR_FORM
+    CLEAR_FORM,
+    CARD_RESET
 } from '../actions/types';
 
 
@@ -43,6 +44,9 @@ export default (state = INITIAL_STATE, action) => {
 
         case CLEAR_FORM:
             return INITIAL_STATE;
+
+        case CARD_RESET:
+            return {...state, front: '', back: ''};
         default:
             return state;
     }

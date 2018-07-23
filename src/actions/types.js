@@ -18,6 +18,7 @@ export const CARDS_FETCH_SUCCESS = 'cards_fetch_success';
 export const DECKS_FETCH_SUCCESS = 'decks_fetch_success';
 export const CLEAR_FORM = 'clear_form';
 export const DECK_DELETE_SUCCESS = 'deck_delete_success';
+export const CARD_RESET = 'card_reset';
 
 
 //Alarm actions

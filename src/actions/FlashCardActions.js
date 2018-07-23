@@ -11,6 +11,7 @@ import {
     ALARM_SAVE_SUCCESS,
     DATE_CHANGE,
     DECK_DELETE_SUCCESS,
+    CARD_RESET
 } from './types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -90,6 +91,12 @@ export const cardDetailUpdate = ({ prop, value }) => {
     return{
         type: CARD_UPDATE,
         payload: {prop, value}
+    }
+}
+
+export const cardDetailReset = () => {
+    return{
+        type: CARD_RESET
     }
 }
 
