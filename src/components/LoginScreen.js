@@ -109,14 +109,15 @@ const styles = {
         color: 'red'
     },
     logoStyle: {
-		height: 300,
-		width: 375
+        flex: 1,
     },
     logoContainerStyle: {
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginLeft: 10,
-		marginRight: 10
+        marginRight: 10,
+        height: 300,
+		width: 375
 	},
 };
 

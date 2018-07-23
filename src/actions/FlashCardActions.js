@@ -9,7 +9,8 @@ import {
     DECKS_FETCH_SUCCESS,
     CLEAR_FORM,
     ALARM_SAVE_SUCCESS,
-    DATE_CHANGE
+    DATE_CHANGE,
+    DECK_DELETE_SUCCESS,
 } from './types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -131,3 +132,15 @@ export const onDateChange = (date) => {
         payload: date
     };
 }
+
+export const deleteDeck = ( deckId ) => {
+    const { currentUser } = firebase.auth();
+
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
+        .remove()
+            .then(() => {
+                dispatch({type: DECK_DELETE_SUCCESS});
+            });
+    };
+};
