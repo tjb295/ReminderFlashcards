@@ -110,6 +110,8 @@ const styles = {
     },
     logoStyle: {
         flex: 1,
+        height: 300,
+		width: 375
     },
     logoContainerStyle: {
 		justifyContent: 'center',

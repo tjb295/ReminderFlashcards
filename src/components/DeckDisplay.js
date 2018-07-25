@@ -37,8 +37,8 @@ class DeckDisplay extends Component {
     }
 
     renderRow(deck) {
-    return (<Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid, deck.alarmDate)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName} 
-                 </Button>);
+    return (<CardSection><Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid, deck.alarmDate)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName} 
+                 </Button></CardSection>);
     }
 
     openAlarmChooseModal(deckId, alarmDate){
@@ -52,6 +52,10 @@ class DeckDisplay extends Component {
 
     //wrapper for the save alarm action
     toSaveDate(){
+        if(this.state.deckAlarmDate == null){
+            alert("Please enter a time and date for your alarm");
+            return;
+        }
         this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave);
         this.setState({showModal: false});
         this.setState( { deckIdToSave: '', deckAlarmDate: ''});
@@ -62,6 +66,11 @@ class DeckDisplay extends Component {
         
         //reset the currently selected deckId
         this.setState({deckIdtoSave: ''});
+        this.setState({showModal: false});
+    }
+
+    //when canceling the model
+    cancelAction() {
         this.setState({showModal: false});
     }
 
@@ -86,6 +95,7 @@ class DeckDisplay extends Component {
                     saveDate={this.toSaveDate.bind(this)}
                     delete={this.toDeleteDeck.bind(this)}
                     currentDeck={this.state.deckIdtoSave}
+                    cancel={this.cancelAction.bind(this)}
                 />
             </Card>
 

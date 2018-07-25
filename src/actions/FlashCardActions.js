@@ -39,7 +39,7 @@ export const saveCurrentDeck = ({ deckName, deckId }) => {
 
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
-        .update({ DeckName: deckName })
+        .update({ DeckName: deckName, alarmStatus: false, date: '' })
         .then(() => {
             dispatch({ type: DECK_CREATE_SUCCESS});
             Actions.pop();
@@ -165,3 +165,14 @@ export const deleteDeck = ( deckId ) => {
     };
 };
 
+export const toggleAlarm = ( deckId, value ) => {
+    const { currentUser } = firebase.auth();
+
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
+        .update({ alarmStatus: value })
+            .then(() => {
+                dispatch({ type: ALARM_TOGGLE});
+            });
+    };
+}

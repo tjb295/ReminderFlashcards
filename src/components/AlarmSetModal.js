@@ -1,4 +1,6 @@
 import React,  { Component } from 'react';
+import { connect } from 'react-redux';
+import { toggleAlarm, alarmFetch } from '../actions/FlashCardActions';
 import {CardSection, Button, Confirm} from './common';
 import { Modal, View, Text, Picker, Switch } from 'react-native';
 import DatePicker from 'react-native-datepicker';
@@ -6,13 +8,33 @@ import DatePicker from 'react-native-datepicker';
 
 class AlarmSetModal extends Component {
 
+    state = { alarmStatus: this.props.alarmStatus };
+
+    //set the alarm status with the loaded value
+    componentWillMount() {
+        if (this.props.currentDeck == ''){
+            return;
+        }
+        this.props.alarmFetch(this.props.currentDeck);
+        this.setState({ alarmStatus: this.props.alarmStatus });
+    }
+    setAlarmStatus() {
+        this.setState({ alarmStatus: !this.state.alarmStatus});
+        console.log(this.props.currentDeck);
+        this.props.toggleAlarm(this.props.currentDeck, this.state.alarmStatus);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ alarmStatus: nextProps.alarmStatus});
+    }
 
     render(){
         return(
             <Modal
             visible={this.props.visible}
             transparent
-            animationType="slide">
+            animationType="slide"
+            onRequestClose={this.props.cancel}>
                 <View
                 style={styles.containerStyle}>
                     <CardSection
@@ -40,7 +62,10 @@ class AlarmSetModal extends Component {
                         }}
                         onDateChange={this.props.onDateChange}
                 />
-                <Switch />
+                <Switch 
+                    value={this.state.alarmStatus}
+                    onValueChange={this.setAlarmStatus.bind(this)}
+                />
                 </CardSection>
                 <CardSection>
                     <Button toPress={this.props.saveDate}> Save Alarm </Button>
@@ -74,5 +99,12 @@ const styles = {
     }
 }
 
+const mapStateToProps = state => {
 
-export default AlarmSetModal;
+    
+    console.log(state.alarm.alarmStatus);
+    return { alarmStatus: state.alarm.alarmStatus };
+}
+
+
+export default connect(mapStateToProps, { toggleAlarm, alarmFetch } )(AlarmSetModal);

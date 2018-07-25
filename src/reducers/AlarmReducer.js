@@ -1,17 +1,24 @@
 import {
-    ALARM_FETCH
+    ALARM_FETCH,
+    ALARM_TOGGLE
 } from '../actions/types';
 
 const INITIAL_STATE = {
-    date: ''
+    alarmStatus: false
 }
 
 export default (state = INITIAL_STATE, actions) => {
     switch (actions.type) {
 
         case ALARM_FETCH:
-            console.log(actions.payload.alarmDate);
-            return {...state, date: actions.payload.alarmDate};
+            if (actions.payload.alarmStatus == null ){
+                return
+            }
+            return {...state, alarmStatus: actions.payload.alarmStatus}
+
+        case ALARM_TOGGLE:
+            return {state};
+
         default:
             return state;
     }
