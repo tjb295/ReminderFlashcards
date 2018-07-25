@@ -1,10 +1,11 @@
 import React,  { Component } from 'react';
 import {CardSection, Button, Confirm} from './common';
-import { Modal, View, Text, Picker } from 'react-native';
+import { Modal, View, Text, Picker, Switch } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
 
 class AlarmSetModal extends Component {
+
 
     render(){
         return(
@@ -39,6 +40,7 @@ class AlarmSetModal extends Component {
                         }}
                         onDateChange={this.props.onDateChange}
                 />
+                <Switch />
                 </CardSection>
                 <CardSection>
                     <Button toPress={this.props.saveDate}> Save Alarm </Button>
@@ -71,5 +73,6 @@ const styles = {
         borderRadius: 5
     }
 }
+
 
 export default AlarmSetModal;

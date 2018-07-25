@@ -2,7 +2,7 @@ import {
     DECKS_FETCH_SUCCESS,
     DATE_CHANGE,
     DECK_DELETE_SUCCESS,
-    ALARM_SAVE_SUCCESS
+    ALARM_SAVE_SUCCESS,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -26,6 +26,7 @@ export default (state = INITIAL_STATE, action) => {
 
         case ALARM_SAVE_SUCCESS:
             return {...state, date: ''};
+
 
         default:
             return state;

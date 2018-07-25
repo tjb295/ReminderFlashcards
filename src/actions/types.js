@@ -24,3 +24,4 @@ export const CARD_RESET = 'card_reset';
 //Alarm actions
 export const ALARM_SAVE_SUCCESS = 'alarm_save_success'
 export const DATE_CHANGE = 'date_change';
+export const ALARM_FETCH = 'alarm_fetch';

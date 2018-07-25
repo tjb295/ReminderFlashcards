@@ -11,7 +11,9 @@ import {
     ALARM_SAVE_SUCCESS,
     DATE_CHANGE,
     DECK_DELETE_SUCCESS,
-    CARD_RESET
+    CARD_RESET,
+    DATE_RESET,
+    ALARM_FETCH
 } from './types';
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
@@ -133,6 +135,17 @@ export const saveAlarm = (date, deckId) => {
     };
 }
 
+export const alarmFetch = (deckId) => {
+    const { currentUser } = firebase.auth();
+
+    return (dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
+        .on('value', snapshot => {
+            dispatch({ type: ALARM_FETCH, payload: snapshot.val()});
+        });
+    };
+}
+
 export const onDateChange = (date) => {
     return {
         type: DATE_CHANGE,
@@ -151,3 +164,4 @@ export const deleteDeck = ( deckId ) => {
             });
     };
 };
+

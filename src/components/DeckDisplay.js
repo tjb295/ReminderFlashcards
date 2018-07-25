@@ -9,7 +9,7 @@ import AlarmSetModal from './AlarmSetModal';
 
 class DeckDisplay extends Component {
 
-    state = { showModal : false, deckIdtoSave: '' };
+    state = { showModal : false, deckIdtoSave: '', deckAlarmDate: '' };
 
     componentWillMount() {
         this.props.deckFetch();
@@ -37,13 +37,13 @@ class DeckDisplay extends Component {
     }
 
     renderRow(deck) {
-    return (<Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName} 
+    return (<Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid, deck.alarmDate)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName} 
                  </Button>);
     }
 
-    openAlarmChooseModal(deckId){
+    openAlarmChooseModal(deckId, alarmDate){
         this.setState({ showModal: true });
-        this.setState({ deckIdtoSave: deckId});
+        this.setState({ deckIdtoSave: deckId, deckAlarmDate: alarmDate});
     }
 
     dateChangeHandle(date) {
@@ -52,8 +52,9 @@ class DeckDisplay extends Component {
 
     //wrapper for the save alarm action
     toSaveDate(){
-        this.props.saveAlarm(this.props.date, this.state.deckIdtoSave);
+        this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave);
         this.setState({showModal: false});
+        this.setState( { deckIdToSave: '', deckAlarmDate: ''});
     }
 
     toDeleteDeck(){
@@ -79,11 +80,12 @@ class DeckDisplay extends Component {
                             />
                 </CardSection>
                 <AlarmSetModal 
-                    date={this.props.date}
                     visible={this.state.showModal}
-                    onDateChange={this.dateChangeHandle.bind(this)}
+                    onDateChange={(value) => this.setState({ deckAlarmDate: value})}
+                    date = {this.state.deckAlarmDate}
                     saveDate={this.toSaveDate.bind(this)}
                     delete={this.toDeleteDeck.bind(this)}
+                    currentDeck={this.state.deckIdtoSave}
                 />
             </Card>
 
@@ -100,4 +102,5 @@ const mapStateToProps = state => {
              date: state.deckFetch.date };
 }
 
-export default connect(mapStateToProps, { deckFetch, saveAlarm, onDateChange, deleteDeck })(DeckDisplay);
+export default connect(mapStateToProps, { deckFetch, saveAlarm, 
+    onDateChange, deleteDeck})(DeckDisplay);
