@@ -5,8 +5,10 @@ import {Card, CardSection, Header, Button } from './common';
 import { deckFetch, saveAlarm, onDateChange, deleteDeck } from '../actions/FlashCardActions';
 import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
+
 import AlarmSetModal from './AlarmSetModal';
 import ReactNativeAN from 'react-native-alarm-notification';
+import { DateParser } from '../dateParser/DateParser';
 
 class DeckDisplay extends Component {
 
@@ -72,6 +74,8 @@ class DeckDisplay extends Component {
             return;
         }
 
+        const convertedDate = DateParser(this.state.deckAlarmDate);
+
         //testing for the alarm module shit
         const alarmData = {
             id: '1234',
@@ -79,7 +83,7 @@ class DeckDisplay extends Component {
             message: `Take a quiz with the ${this.state.deckName}`,
             small_icon: "ic_launcher",
             schedule_once: true,
-            fire_date: "01-01-2018 00:00:00"
+            fire_date: convertedDate
         };
 
         ReactNativeAN.scheduleAlarm(alarmData);
