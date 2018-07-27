@@ -12,7 +12,7 @@ export default (state = INITIAL_STATE, actions) => {
 
         case ALARM_FETCH:
             if (actions.payload.alarmStatus == null ){
-                return
+                return {...state}
             }
             return {...state, alarmStatus: actions.payload.alarmStatus}
 

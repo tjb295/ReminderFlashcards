@@ -39,7 +39,7 @@ export const saveCurrentDeck = ({ deckName, deckId }) => {
 
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
-        .update({ DeckName: deckName, alarmStatus: false, date: '' })
+        .update({ DeckName: deckName, alarmStatus: true, alarmDate: '' })
         .then(() => {
             dispatch({ type: DECK_CREATE_SUCCESS});
             Actions.pop();
@@ -123,12 +123,12 @@ export const cardsFetch = (deckId) => {
     };
 }
 
-export const saveAlarm = (date, deckId) => {
+export const saveAlarm = (date, deckId, status) => {
     const { currentUser } = firebase.auth();
     console.log(date);
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
-        .update({ alarmDate: date})
+        .update({ alarmDate: date, alarmStatus: status})
             .then(() => {
                 dispatch({ type: ALARM_SAVE_SUCCESS });
             });

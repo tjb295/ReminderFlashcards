@@ -6,10 +6,11 @@ import { deckFetch, saveAlarm, onDateChange, deleteDeck } from '../actions/Flash
 import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
 import AlarmSetModal from './AlarmSetModal';
+import ReactNativeAN from 'react-native-alarm-notification';
 
 class DeckDisplay extends Component {
 
-    state = { showModal : false, deckIdtoSave: '', deckAlarmDate: '' };
+    state = { showModal : false, deckIdtoSave: '', deckAlarmDate: '', deckAlarmStatus: true };
 
     componentWillMount() {
         this.props.deckFetch();
@@ -37,17 +38,23 @@ class DeckDisplay extends Component {
     }
 
     renderRow(deck) {
-    return (<CardSection><Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid, deck.alarmDate)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName} 
+    return (<CardSection><Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid, deck.alarmDate, deck.alarmStatus)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName} 
                  </Button></CardSection>);
     }
 
-    openAlarmChooseModal(deckId, alarmDate){
+    openAlarmChooseModal(deckId, alarmDate, alarmStatus){
         this.setState({ showModal: true });
-        this.setState({ deckIdtoSave: deckId, deckAlarmDate: alarmDate});
+        this.setState({ deckIdtoSave: deckId, deckAlarmDate: alarmDate, deckAlarmStatus: alarmStatus});
     }
 
     dateChangeHandle(date) {
         this.props.onDateChange(date);
+    }
+
+    toggleAlarmStatus(){
+        this.setState({deckAlarmStatus: !this.state.deckAlarmStatus});
+        this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave, this.state.deckAlarmStatus);
+
     }
 
     //wrapper for the save alarm action
@@ -56,9 +63,24 @@ class DeckDisplay extends Component {
             alert("Please enter a time and date for your alarm");
             return;
         }
-        this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave);
+
+        //testing for the alarm module shit
+        const alarmData = {
+            id: '1234',
+            title: "Test alarm",
+            message: "Take a Quiz with the Japanese Deck",
+            small_icon: "ic_launcher",
+            schedule_once: true,
+            fire_date: "01-01-2018 00:00:00"
+        };
+
+        ReactNativeAN.scheduleAlarm(alarmData);
+        ReactNativeAN.getScheduledAlarms().then(alarmNotif => console.log(alarmNotif + "help"));
+
+        this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave, true);
         this.setState({showModal: false});
         this.setState( { deckIdToSave: '', deckAlarmDate: ''});
+
     }
 
     toDeleteDeck(){
@@ -72,6 +94,7 @@ class DeckDisplay extends Component {
     //when canceling the model
     cancelAction() {
         this.setState({showModal: false});
+        this.setState({deckAlarmStatus: false});
     }
 
 
@@ -96,6 +119,8 @@ class DeckDisplay extends Component {
                     delete={this.toDeleteDeck.bind(this)}
                     currentDeck={this.state.deckIdtoSave}
                     cancel={this.cancelAction.bind(this)}
+                    alarmStatus = {this.state.deckAlarmStatus}
+                    toggleAlarm={this.toggleAlarmStatus.bind(this)}
                 />
             </Card>
 

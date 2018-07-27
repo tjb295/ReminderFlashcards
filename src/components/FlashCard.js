@@ -11,7 +11,7 @@ class FlashCard extends Component {
               } };
 
     displayContents(){
-        if(!this.state.recieveProps){
+        if(!this.state.recieveProps && this.state.contents.back == ''){
             return <Spinner />
         }
         if(this.props.showBack){
