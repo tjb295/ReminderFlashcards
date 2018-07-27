@@ -22,8 +22,6 @@ export const DateParser = Date => {
 
     const end_res = (day + "-" + month + "-" + year + " "
                          + hour + ":" + minute + ":" + "00");
-    
-    console.log(end_res + " Is the time ");
 
     return end_res;
 

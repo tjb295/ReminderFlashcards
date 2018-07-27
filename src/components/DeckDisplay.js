@@ -61,7 +61,10 @@ class DeckDisplay extends Component {
         }
         else{
             this.setState({deckAlarmStatus: true});
+            
         }
+        ReactNativeAN.stopAlarm();
+        
         
         this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave, !this.state.deckAlarmStatus);
 
@@ -78,8 +81,8 @@ class DeckDisplay extends Component {
 
         //testing for the alarm module shit
         const alarmData = {
-            id: '1234',
-            title: "Test alarm",
+            id: "123",
+            title: "Time for your FlashCards!",
             message: `Take a quiz with the ${this.state.deckName}`,
             small_icon: "ic_launcher",
             schedule_once: true,

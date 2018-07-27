@@ -6,6 +6,7 @@ import { cardsFetch, clearForm } from '../actions/FlashCardActions';
 import FlashCard from './FlashCard';
 import _ from 'lodash';
 import Swiper from 'react-native-swiper';
+import ReactNativeAN from 'react-native-alarm-notification';
 
 class GameScreen extends Component {
 
@@ -15,6 +16,7 @@ class GameScreen extends Component {
 
     componentWillMount(){
         this.props.cardsFetch(this.props.deckId);
+        ReactNativeAN.stopAlarm();
     }
 
     componentWillUnmount(){
