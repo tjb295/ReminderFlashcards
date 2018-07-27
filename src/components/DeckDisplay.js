@@ -10,7 +10,7 @@ import ReactNativeAN from 'react-native-alarm-notification';
 
 class DeckDisplay extends Component {
 
-    state = { showModal : false, deckIdtoSave: '', deckAlarmDate: '', deckAlarmStatus: true };
+    state = { showModal : false, deckIdtoSave: '', deckAlarmDate: '', deckAlarmStatus: false, deckName: '' };
 
     componentWillMount() {
         this.props.deckFetch();
@@ -38,13 +38,15 @@ class DeckDisplay extends Component {
     }
 
     renderRow(deck) {
-    return (<CardSection><Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid, deck.alarmDate, deck.alarmStatus)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName} 
+    return (<CardSection><Button onLongPress={this.openAlarmChooseModal.bind(this, deck.uid, deck.alarmDate, deck.alarmStatus, deck.DeckName)} toPress={Actions.gameScreen.bind(this, {deckId: deck.uid})}>{deck.DeckName} 
                  </Button></CardSection>);
     }
 
-    openAlarmChooseModal(deckId, alarmDate, alarmStatus){
+    openAlarmChooseModal(deckId, alarmDate, alarmStatus, deckName){
         this.setState({ showModal: true });
-        this.setState({ deckIdtoSave: deckId, deckAlarmDate: alarmDate, deckAlarmStatus: alarmStatus});
+        this.setState({ deckIdtoSave: deckId, deckAlarmDate: alarmDate, 
+            deckAlarmStatus: alarmStatus, deckName: deckName});
+        console.log(this.state.deckAlarmStatus + "alarmstatus");
     }
 
     dateChangeHandle(date) {
@@ -52,8 +54,14 @@ class DeckDisplay extends Component {
     }
 
     toggleAlarmStatus(){
-        this.setState({deckAlarmStatus: !this.state.deckAlarmStatus});
-        this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave, this.state.deckAlarmStatus);
+        if(this.state.deckAlarmStatus == true){
+            this.setState({deckAlarmStatus:false});
+        }
+        else{
+            this.setState({deckAlarmStatus: true});
+        }
+        
+        this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave, !this.state.deckAlarmStatus);
 
     }
 
@@ -68,7 +76,7 @@ class DeckDisplay extends Component {
         const alarmData = {
             id: '1234',
             title: "Test alarm",
-            message: "Take a Quiz with the Japanese Deck",
+            message: `Take a quiz with the ${this.state.deckName}`,
             small_icon: "ic_launcher",
             schedule_once: true,
             fire_date: "01-01-2018 00:00:00"
@@ -77,7 +85,7 @@ class DeckDisplay extends Component {
         ReactNativeAN.scheduleAlarm(alarmData);
         ReactNativeAN.getScheduledAlarms().then(alarmNotif => console.log(alarmNotif + "help"));
 
-        this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave, true);
+        this.props.saveAlarm(this.state.deckAlarmDate, this.state.deckIdtoSave, this.state.deckAlarmStatus);
         this.setState({showModal: false});
         this.setState( { deckIdToSave: '', deckAlarmDate: ''});
 

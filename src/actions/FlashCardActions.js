@@ -39,7 +39,7 @@ export const saveCurrentDeck = ({ deckName, deckId }) => {
 
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/decks/${deckId}`)
-        .update({ DeckName: deckName, alarmStatus: true, alarmDate: '' })
+        .update({ DeckName: deckName, alarmStatus: false, alarmDate: '' })
         .then(() => {
             dispatch({ type: DECK_CREATE_SUCCESS});
             Actions.pop();
